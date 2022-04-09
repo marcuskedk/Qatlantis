@@ -18,15 +18,11 @@ const Sidebar = () => {
         <Navbar.Collapse id="basic-navbar-nav" className="w-100 py-2 px-3">
           <Nav className="ms-auto" activeKey={location.pathname}>
             <li>
-              <NavLink activeclassname="active" className="nav-link" to="/">Home</NavLink>
+              <NavLink activeclassname="active" className="nav-link" to="/">Log ud</NavLink>
             </li>
-            <li>
-              <NavLink activeclassname="active" className="nav-link" to="/cases">Case</NavLink>
-            </li>
-            <NavDropdown title="Dropdown" id="basic-nav-dropdown">
-              <NavLink activeclassname="active" className="dropdown-item" to="/profile">Home</NavLink>
-              <NavLink activeclassname="active" className="dropdown-item" to="/cases">Home</NavLink>
-              <NavLink activeclassname="active" className="dropdown-item" to="/customer">Home</NavLink>
+            <NavDropdown title="Marcus K." id="basic-nav-dropdown">
+              <NavLink activeclassname="active" className="dropdown-item" to="/profile">Profil</NavLink>
+              <NavLink activeclassname="active" className="dropdown-item" to="/login">Log ud</NavLink>
             </NavDropdown>
           </Nav>
         </Navbar.Collapse>
@@ -36,19 +32,16 @@ const Sidebar = () => {
         <Navbar.Collapse id="basic-navbar-nav" className="flex-column align-items-start w-100 py-2">
           <Nav className="flex-column w-100">
             <li className="nav-item">
-              <NavLink activeclassname="active" className="nav-link" to="/">Home</NavLink>
+              <NavLink activeclassname="active" className="nav-link" to="/dashboard">Dashboard</NavLink>
             </li>
             <li className="nav-item">
-              <NavLink activeclassname="active" className="nav-link" to="/case">Home</NavLink>
+              <NavLink activeclassname="active" className="nav-link" to="/cases">Cases</NavLink>
             </li>
-            <NavDropdown title="Dropdown" id="basic-nav-dropdown">
-              <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
-              <NavDropdown.Item href="#action/3.2">Another action</NavDropdown.Item>
-              <NavDropdown.Item href="#action/3.3">Something</NavDropdown.Item>
-              <NavDropdown.Item href="#action/3.4">Separated link</NavDropdown.Item>
-            </NavDropdown>
             <li className="nav-item">
-              <Nav.Link href="#link">Link</Nav.Link>
+              <NavLink activeclassname="active" className="nav-link" to="/customers">Kunder</NavLink>
+            </li>
+            <li className="nav-item">
+              <NavLink activeclassname="active" className="nav-link" to="/employees">Medarbejder</NavLink>
             </li>
           </Nav>
         </Navbar.Collapse>

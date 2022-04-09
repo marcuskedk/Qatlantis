@@ -14,7 +14,7 @@ const Layout = ({children}) => {
             <Sidebar />
             <div className="content">
               <Container fluid="xxxl">
-                <Row>
+                <Row className="justify-content-center g-3">
                   {children}
                   <Footer />
                 </Row>
