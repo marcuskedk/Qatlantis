@@ -12,13 +12,19 @@ const api = {
 const CreateCase = () => {
 
   const [ validated, setValidated ] = useState(false);
-  const [ validated2, setValidated2 ] = useState(false);
+  const [ validatedCustomer, setValidatedCustomer ] = useState(false);
+  const [ validatedEmployee, setValidatedEmployee ] = useState(false);
+
   const [ cases, setCases ] = useState();
-  const [ customers, setCustomers ] = useState();
-  const [ employees, setEmployees ] = useState();
   const [ createCase, setCreateCase ] = useState();
+
+  const [ customers, setCustomers ] = useState();
   const [ createCustomer, setCreateCustomer ] = useState();
   const [ extraCustomer, setExtraCustomer ] = useState(false);
+
+  const [ employees, setEmployees ] = useState();
+  const [ createEmployee, setCreateEmployee ] = useState();
+  const [ extraEmployee, setExtraEmployee ] = useState(false);
 
   useEffect(() => {
     fetch(api.baseUrl + "api/cases", {
@@ -72,14 +78,14 @@ const CreateCase = () => {
     }));
   }
 
-  const handleFormSubmit2 = event => {
+  const handleFormSubmitCustomer = event => {
     event.preventDefault();
 
     const form = event.currentTarget;
     if (form.checkValidity() === false) {
       event.stopPropagation();
     }
-    setValidated2(true);
+    setValidatedCustomer(true);
 
     fetch(api.baseUrl + "api/customer", {
       method: "POST",
@@ -90,14 +96,14 @@ const CreateCase = () => {
     }).then(response => console.log(response)).then(json => setCreateCustomer(json));
   }
 
-  const handleFormChange2 = event => {
+  const handleFormChangeCustomer = event => {
     setCreateCustomer(prevState => ({
       ...prevState,
       [event.target.name]: event.target.value
     }));
   }
 
-  const changeFormSelect = event => {
+  const changeFormSelectCustomer = event => {
     console.log(event.target.value)
     if (event.target.value == 0) {
       setExtraCustomer(true)
@@ -106,8 +112,46 @@ const CreateCase = () => {
     }
   }
 
-  const changeToFalse = event => {
+  const changeToFalseCustomer = event => {
     setExtraCustomer(false)
+  }
+
+  const handleFormSubmitEmployee = event => {
+    event.preventDefault();
+
+    const form = event.currentTarget;
+    if (form.checkValidity() === false) {
+      event.stopPropagation();
+    }
+    setValidatedEmployee(true);
+
+    fetch(api.baseUrl + "api/employee", {
+      method: "POST",
+      headers: {
+        "content-type": api.contentType
+      },
+      body: JSON.stringify(createEmployee)
+    }).then(response => console.log(response)).then(json => setCreateEmployee(json));
+  }
+
+  const handleFormChangeEmployee = event => {
+    setCreateEmployee(prevState => ({
+      ...prevState,
+      [event.target.name]: event.target.value
+    }));
+  }
+
+  const changeFormSelectEmployee = event => {
+    console.log(event.target.value)
+    if (event.target.value == 0) {
+      setExtraEmployee(true)
+    } else {
+      setExtraEmployee(false)
+    }
+  }
+
+  const changeToFalseEmployee = event => {
+    setExtraEmployee(false)
   }
 
   return (
@@ -115,15 +159,14 @@ const CreateCase = () => {
       <Col md={12}>
         <Card>
           <Card.Body>
-            { extraCustomer == false &&
+            { ((extraCustomer == false) && (extraEmployee == false)) &&
               <>
                 <h3 className="d-flex w-100 justify-content-between">Opret kunde <Link className="btn btn-primary rounded-0" to="/cases">Tilbage</Link></h3>
                 <Form noValidate validated={validated} onChange={handleFormChange} onSubmit={handleFormSubmit}>
-                  <Form.Control required type="hidden" name="status" value="0" />
                   <Row className="g-3">
                     <Form.Group as={Col} sm="6">
                       <Form.Label>Kunde</Form.Label>
-                      <select name="customerId" className="form-customselect" onChange={changeFormSelect}>
+                      <select name="customerId" className="form-customselect" onChange={changeFormSelectCustomer}>
                         <option hidden defaultValue value="">{"<- VÆLG KUNDE ->"}</option>
                         {customers?.map(cus => (
                           <option key={cus.id} value={cus.id}>{cus.name}</option>
@@ -134,28 +177,38 @@ const CreateCase = () => {
                     </Form.Group>
                     <Form.Group as={Col} sm="6">
                       <Form.Label>Medarbejder</Form.Label>
-                      <select name="employeeId" className="form-customselect">
+                      <select name="employeeId" className="form-customselect" onChange={changeFormSelectEmployee}>
                         <option hidden defaultValue value="">{"<- VÆLG MEDARBEJDER ->"}</option>
                         {employees?.map(em => (
                           <option key={em.id} value={em.id}>{em.name}</option>
                         ))}
+                        <option disabled value="">--------------</option>
+                        <option value="0">Opret ny</option>
                       </select>
                     </Form.Group>
-                    <Form.Group as={Col} md="6" controlId="name-validate">
+                    <Form.Group as={Col} md="6" controlId="title-validate">
                       <Form.Label>Opgave navn</Form.Label>
                       <Form.Control required type="text" name="title" placeholder="Opgave navn..." />
                       <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
                       <Form.Control.Feedback type="invalid">Skriv opgave navn.</Form.Control.Feedback>
                     </Form.Group>
-                    <Form.Group as={Col} md="6" controlId="bio-validate">
+                    <Form.Group as={Col} md="6" controlId="textarea-validate">
                       <Form.Label>Opgave beskrivelse</Form.Label>
                       <Form.Control required name="description" as="textarea" rows={1} placeholder="Opgave beskrivelse..." />
                       <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
                       <Form.Control.Feedback type="invalid">Skriv opgave beskrivelse.</Form.Control.Feedback>
                     </Form.Group>
-                    <Form.Group as={Col} md="6" controlId="name-validate">
+                    <Form.Group as={Col} md="6" controlId="price-validate">
                       <Form.Label>Opgave pris</Form.Label>
                       <Form.Control required type="number" name="price" placeholder="Opgave pris..." />
+                      <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
+                      <Form.Control.Feedback type="invalid">Skriv opgave pris.</Form.Control.Feedback>
+                    </Form.Group>
+                    <Form.Control required type="hidden" name="status" value="0" />
+                    <Form.Control required type="hidden" name="startDate" value={new Date().toLocaleString('da-DK')} />
+                    <Form.Group as={Col} md="6" controlId="endDate-validate">
+                      <Form.Label>Opgave dato</Form.Label>
+                      <Form.Control required type="date" name="endDate" placeholder="Opgave dato..." />
                       <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
                       <Form.Control.Feedback type="invalid">Skriv opgave pris.</Form.Control.Feedback>
                     </Form.Group>
@@ -166,10 +219,10 @@ const CreateCase = () => {
                 </Form>
               </>
             }
-            { extraCustomer == true &&
+            { ((extraCustomer == true) && (extraEmployee == false)) &&
               <>
-                <h3 className="d-flex w-100 justify-content-between">Opret kunde <span className="btn btn-primary rounded-0" onClick={changeToFalse}>Tilbage</span></h3>
-                <Form noValidate validated={validated2} onChange={handleFormChange2} onSubmit={handleFormSubmit2}>
+                <h3 className="d-flex w-100 justify-content-between">Opret Kunde <span className="btn btn-primary rounded-0" onClick={changeToFalseCustomer}>Tilbage</span></h3>
+                <Form noValidate validated={validatedCustomer} onChange={handleFormChangeCustomer} onSubmit={handleFormSubmitCustomer}>
                   <Form.Control required type="hidden" name="status" value="0" />
                   <Row className="g-3">
                     <Form.Group as={Col} md="6" controlId="name-validate">
@@ -178,32 +231,45 @@ const CreateCase = () => {
                       <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
                       <Form.Control.Feedback type="invalid">Skriv opgave navn.</Form.Control.Feedback>
                     </Form.Group>
-                    <Form.Group as={Col} md="6" controlId="name-validate">
+                    <Form.Group as={Col} md="6" controlId="address-validate">
                       <Form.Label>Kunde adresse</Form.Label>
-                      <Form.Control required type="text" name="adress" placeholder="Kunde adresse..." />
+                      <Form.Control required type="text" name="address" placeholder="Kunde adresse..." />
                       <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
                       <Form.Control.Feedback type="invalid">Skriv opgave navn.</Form.Control.Feedback>
                     </Form.Group>
-                    <Form.Group as={Col} md="12" controlId="name-validate">
+                    <Form.Group as={Col} md="12" controlId="email-validate">
                       <Form.Label>Kunde email</Form.Label>
                       <Form.Control required type="email" name="email" placeholder="Kunde email..." />
                       <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
                       <Form.Control.Feedback type="invalid">Skriv opgave navn.</Form.Control.Feedback>
                     </Form.Group>
-                    <Form.Group as={Col} md="6" controlId="bio-validate">
-                      <Form.Label>Opgave beskrivelse</Form.Label>
-                      <Form.Control required name="description" as="textarea" rows={1} placeholder="Opgave beskrivelse..." />
+                    <Col sm={12}>
+                      <Button type="submit" className="btn btn-success rounded-0 btn-md">Opret Kunde</Button>
+                    </Col>
+                  </Row>
+                </Form>
+              </>
+            }
+            { ((extraCustomer == false) && (extraEmployee == true)) &&
+              <>
+                <h3 className="d-flex w-100 justify-content-between">Opret Medarbejder <span className="btn btn-primary rounded-0" onClick={changeToFalseEmployee}>Tilbage</span></h3>
+                <Form noValidate validated={validatedEmployee} onChange={handleFormChangeEmployee} onSubmit={handleFormSubmitEmployee}>
+                  <Form.Control required type="hidden" name="status" value="0" />
+                  <Row className="g-3">
+                    <Form.Group as={Col} md="12" controlId="name-validate">
+                      <Form.Label>Medarbejders navn</Form.Label>
+                      <Form.Control required type="text" name="name" placeholder="Medarbejders navn..." />
                       <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
-                      <Form.Control.Feedback type="invalid">Skriv opgave beskrivelse.</Form.Control.Feedback>
+                      <Form.Control.Feedback type="invalid">Skriv opgave navn.</Form.Control.Feedback>
                     </Form.Group>
-                    <Form.Group as={Col} md="6" controlId="name-validate">
-                      <Form.Label>Opgave pris</Form.Label>
-                      <Form.Control required type="number" name="price" placeholder="Opgave pris..." />
+                    <Form.Group as={Col} md="12" controlId="email-validate">
+                      <Form.Label>Medarbejders email</Form.Label>
+                      <Form.Control required type="email" name="email" placeholder="Medarbejders email..." />
                       <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
-                      <Form.Control.Feedback type="invalid">Skriv opgave pris.</Form.Control.Feedback>
+                      <Form.Control.Feedback type="invalid">Skriv opgave navn.</Form.Control.Feedback>
                     </Form.Group>
                     <Col sm={12}>
-                      <Button type="submit" className="btn btn-success rounded-0 btn-md">Opret kunde</Button>
+                      <Button type="submit" className="btn btn-success rounded-0 btn-md">Opret Medarbejder</Button>
                     </Col>
                   </Row>
                 </Form>
