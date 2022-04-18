@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react'
+import { useNavigate } from 'react-router-dom';
 import { Link } from "react-router-dom";
 
 // BOOTSTRAP
@@ -10,6 +11,8 @@ const api = {
 }
 
 const CreateCase = () => {
+
+  const navigate = useNavigate();
 
   const [ validated, setValidated ] = useState(false);
   const [ validatedCustomer, setValidatedCustomer ] = useState(false);
@@ -68,7 +71,7 @@ const CreateCase = () => {
         "content-type": api.contentType
       },
       body: JSON.stringify(createCase)
-    }).then(response => console.log(response)).then(json => setCreateCase(json));
+    }).then(response => navigate("/cases")).then(json => setCreateCase(json));
   }
 
   const handleFormChange = event => {
@@ -93,7 +96,7 @@ const CreateCase = () => {
         "content-type": api.contentType
       },
       body: JSON.stringify(createCustomer)
-    }).then(response => console.log(response)).then(json => setCreateCustomer(json));
+    }).then(response => navigate("/cases/create")).then(json => setCreateCustomer(json));
   }
 
   const handleFormChangeCustomer = event => {
@@ -131,7 +134,7 @@ const CreateCase = () => {
         "content-type": api.contentType
       },
       body: JSON.stringify(createEmployee)
-    }).then(response => console.log(response)).then(json => setCreateEmployee(json));
+    }).then(response => navigate("/cases/create")).then(json => setCreateEmployee(json));
   }
 
   const handleFormChangeEmployee = event => {

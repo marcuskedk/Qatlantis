@@ -64,9 +64,9 @@ const Cases = () => {
           <thead>
             <tr>
               <th>Title:</th>
-              <th>Status:</th>
               <th>Kunde:</th>
               <th>Medarbejderen:</th>
+              <th>Status:</th>
               <th>Slet:</th>
               <th>Læs mere:</th>
             </tr>
@@ -75,7 +75,6 @@ const Cases = () => {
             { cases?.map((cas) => ( 
               <tr key={ cas.id }>
                 <td>{ cas.title }</td>
-                <td>{ cas.status == false ? "Ikke lavet" : "Færdig" }</td>
                 { customers?.map((cus) => (
                   <>
                     { cas.customerId == cus.id && <td key={ cus.id }>{ cus.name }</td> }
@@ -86,6 +85,7 @@ const Cases = () => {
                     { cas.employeeId == em.id && <td key={ em.id }>{ em.name }</td> }
                   </>
                 )) }
+                <td className="p-0" style={{}}><Link className={cas.status == false ? "btn btn-danger btn-sm d-block w-100 p-2 rounded-0" : "btn btn-success btn-sm d-block w-100 p-2 rounded-0" } to={"/cases/editstatus/" + cas.id }>{ cas.status == false ? "Ikke lavet" : "Færdig" }</Link></td>
                 <td className="p-0"><Link className="btn btn-danger btn-sm d-block p-2 rounded-0" to={"/cases/delete/" + cas.id }>Slet</Link></td>
                 <td className="p-0"><Link className="btn btn-primary btn-sm d-block p-2 rounded-0" to={"/cases/" + cas.id }>Læs mere</Link></td>
               </tr>
