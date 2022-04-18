@@ -12,3 +12,13 @@ Skriv `npm i`
 4. Derefter start **QatlantisAPI** serveren.
 
 5. Til **Qatlantis** skriv `npm start`
+
+# Kræver
+1. Node.js
+2. Visual Studio 2022
+3. Visual Studio Code
+4. SQLite
+5. Insomnia
+
+# Download
+https://github.com/mkefirma/QatlantisAPI
