@@ -75,6 +75,7 @@ const CreateCase = () => {
   }
 
   const handleFormChange = event => {
+
     setCreateCase(prevState => ({
       ...prevState,
       [event.target.name]: event.target.value
@@ -207,13 +208,17 @@ const CreateCase = () => {
                       <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
                       <Form.Control.Feedback type="invalid">Skriv opgave pris.</Form.Control.Feedback>
                     </Form.Group>
-                    <Form.Control required type="hidden" name="status" value="0" />
-                    <Form.Control required type="hidden" name="startDate" value={new Date().toLocaleString('da-DK')} />
-                    <Form.Group as={Col} md="6" controlId="endDate-validate">
-                      <Form.Label>Opgave dato</Form.Label>
-                      <Form.Control required type="date" name="endDate" placeholder="Opgave dato..." />
+                    <Form.Group as={Col} md="6" controlId="startDate-validate">
+                      <Form.Label>Opgave start dato</Form.Label>
+                      <Form.Control required type="datetime-local" name="startDate" placeholder="Opgave dato..." />
                       <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
-                      <Form.Control.Feedback type="invalid">Skriv opgave pris.</Form.Control.Feedback>
+                      <Form.Control.Feedback type="invalid">Skriv opgave start dato.</Form.Control.Feedback>
+                    </Form.Group>
+                    <Form.Group as={Col} md="6" controlId="endDate-validate">
+                      <Form.Label>Opgave slut dato</Form.Label>
+                      <Form.Control required type="datetime-local" name="endDate" placeholder="Opgave dato..." />
+                      <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
+                      <Form.Control.Feedback type="invalid">Skriv opgave slut dato.</Form.Control.Feedback>
                     </Form.Group>
                     <Col sm={12}>
                       <Button type="submit" className="btn btn-success rounded-0 btn-md">Opret opgave</Button>

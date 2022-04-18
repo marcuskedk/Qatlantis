@@ -86,7 +86,7 @@ const Home = () => {
               <tr key={ cas.id }>
                 <td>{ cas.title }</td>
                 <td>{ cas.description }</td>
-                <td>{ cas.price }</td>
+                <td>{ cas.price } DKK</td>
                 <td>{ cas.status == false ? "Ikke lavet" : "Færdig" }</td>
                 { customers?.map((cus) => (
                   <>

@@ -24,19 +24,18 @@ import Login from "./pages/Login";
 const App = () => {
 
   const location = useLocation();
-
-  const { id } = useParams();
+  const itemID = location.search.split("?")[1];
 
   return (
     <>
-      { ((location.pathname == '/dashboard') || (location.pathname == '/cases') || (location.pathname == '/cases/create') || (location.pathname == '/cases/') || (location.pathname == '/customers') || (location.pathname == '/employees')) &&
+      { ((location.pathname == '/dashboard') || (location.pathname == '/cases') || (location.pathname == '/cases/create') || (location.pathname == '/cases/case') || (location.pathname == '/customers') || (location.pathname == '/employees')) &&
         <Layout>
           <Routes>
             <Route path="/dashboard" element={ <Dashboard /> } />
             <Route path="/cases" element={ <Cases /> } />
             <Route path="/cases/create" element={ <CreateCase /> } />
-            <Route path="/cases/editstatus/:id" element={ <EditCase /> } />
-            <Route path="/cases/:id" element={ <CasesId /> } />
+            <Route path="/cases/edit/:id" element={ <EditCase /> } />
+            <Route path="/cases/case" element={ <CasesId /> } />
             <Route path="/customers" element={ <Customers /> } />
             <Route path="/employees" element={ <Employees /> } />
           </Routes>
