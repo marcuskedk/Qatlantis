@@ -1,6 +1,6 @@
 ## Velkommen til Qatlantis - Lavet af M.K.E - Marcus Kjær Eriksen
 
-Følg disse for at komme den rigtig vej:
+### Følg disse for at komme den rigtig vej:
 
 1. Clone opgaven
 
@@ -13,12 +13,12 @@ Skriv `npm i`
 
 5. Til **Qatlantis** skriv `npm start`
 
-# Kræver
+### Kræver
 1. Node.js
 2. Visual Studio 2022
 3. Visual Studio Code
 4. SQLite
 5. Insomnia
 
-# Download
+### Download
 https://github.com/mkefirma/QatlantisAPI
